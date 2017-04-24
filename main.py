@@ -20,11 +20,19 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
     def Open_Files(self):
         filePath = os.environ['HOMEPATH']
         fileNames = QtGui.QFileDialog.getOpenFileNames(self,"select files",filePath)
+        j = []
         for i in fileNames:
-            print i,1
-            j = re.findall(r'\\(.*)',i)
-            print j,2
-            k = QtGui.QStringListModel(j)
+            files = os.path.basename(str(i))
+            print files
+            j.append(files)
+        print j
+        '''
+        for i in fileNames:
+            print i
+            j = re.findall(r'[^\\]+$',i)
+            print j
+        '''
+        k = QtGui.QStringListModel(j)
         self.files_list.setModel(k)
         self.files_list.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)    #可以多选
         self.files_list.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)    #让结果不能编辑
