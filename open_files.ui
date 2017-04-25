@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="open_files">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>20</x>
       <y>390</y>
       <width>81</width>
       <height>41</height>
@@ -48,6 +48,19 @@
     </property>
     <property name="text">
      <string>删除文件</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="add_files">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>390</y>
+      <width>81</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>添加文件</string>
     </property>
    </widget>
   </widget>
