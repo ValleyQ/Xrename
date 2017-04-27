@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>打开文件.</string>
+     <string>打开文件</string>
     </property>
    </widget>
    <widget class="QListView" name="files_list">
@@ -37,7 +37,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="remove_files">
+   <widget class="QPushButton" name="delete_files">
     <property name="geometry">
      <rect>
       <x>220</x>
