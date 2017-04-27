@@ -19,10 +19,11 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.open_files.clicked.connect(self.Open_Files)
         self.add_files.clicked.connect(self.Add_Files)
+        self.delete_files.clicked.connect(self.Delete_Files)
 
     def Open_Files(self):
         fileNames = QtGui.QFileDialog.getOpenFileNames(self,"select files",filePath)
-        global j,l
+        global j,l,k
         j,l = [],[]
         for i in fileNames:
             l.append(str(i))
@@ -40,23 +41,43 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         self.files_list.setModel(k)
         self.files_list.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)    #可以多选
         self.files_list.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)    #让结果不能编辑
-        return j
+        self.files_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.files_list.customContextMenuRequested.connect(self.onRightClick)
 
     def Add_Files(self):
         fileNames = QtGui.QFileDialog.getOpenFileNames(self, "select files", filePath)
-        j1 = []
-        global j,l
+        j1,a ,c= [],[],[]
+        global j,l,k
         print l,45
         for i in fileNames:
-            files = os.path.basename(str(i))
+            print i
+            a.append(str(i))
+        c = list(set(a).difference(set(l)))
+        for d in c:
+            files = os.path.basename(str(d))
             print files
             j1.append(files)
         print j1,11
         j = j + j1
         k = QtGui.QStringListModel(j)
         self.files_list.setModel(k)
-        self.files_list.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)  # 可以多选
-        self.files_list.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)  # 让结果不能编辑
+
+
+    def Delete_Files(self):
+        self.deleteItem()
+
+
+    def onRightClick(self, pos):
+        menu = QtGui.QMenu(self)
+        delete = QtGui.QAction('Delete', self, triggered=self.deleteItem)
+        menu.addAction(delete)
+        menu.exec_(self.files_list.mapToGlobal(pos))
+
+    def deleteItem(self):
+        index = self.files_list.currentIndex()
+        print 'Delete: %s' % index.data().toString()
+        k.removeRow(index.row())
+
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     window = MyApp()
